@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAGcompare - Musashino Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">AI Assistant for the
+Faculty of Data Science, Musashino University</div>
+            <div class="header-right">
+                <a href="/history" id="historyLink" class="nav-link">View History</a>
+            </div>
+
+            <div id="searchControls" class="search-container">
+                <input type="text" id="queryInput" placeholder="Ask about Musashino">
+                <button id="compareBtn">Submit</button>
+                <div class="toggle-container">
+                    <label class="switch">
+                        <input type="checkbox" id="enterToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <span class="toggle-label">Enter to Submit</span>
+                </div>
+            </div>
+        </header>
+
+        <main id="searchPage" class="comparison-grid">
+            <div class="card" id="sarCard">
+                <div class="card-header">
+                    <span class="dot blue"></span> GPT 4 + SAR
+                </div>
+                <div class="card-content" id="sarResult">
+                    <p class="placeholder">Results will appear here...</p>
+                </div>
+            </div>
+
+            <div class="card" id="ragCard">
+                <div class="card-header">
+                    <span class="dot yellow"></span> GPT 4 + RAG
+                </div>
+                <div class="card-content" id="ragResult">
+                    <p class="placeholder">Results will appear here...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

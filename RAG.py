@@ -15,7 +15,7 @@ class MusashinoAssistant_RAG:
         
         # 2. Setup ChromaDB
         # Point this to the directory where you saved your SAR/RAG data
-        self.chroma_client = chromadb.PersistentClient(path="C:/Users/hp it/Documents/PrecisionChat/models/chroma_rag_storage")
+        self.chroma_client = chromadb.PersistentClient(path="./rag_db")
         
         # Define the embedding function so Chroma can vectorize your queries automatically
         self.embedding_fn = OpenAIEmbeddingFunction(
@@ -25,9 +25,10 @@ class MusashinoAssistant_RAG:
         
         # Get the existing collection
         self.collection = self.chroma_client.get_or_create_collection(
-            name="japanese_docs_with_overlap",
+            name="RAG",
             embedding_function=self.embedding_fn
         )
+
     def get_answer(self, user_query, language='japanese'):
         # 1. RETRIEVAL (Search ChromaDB)
         results = self.collection.query(
@@ -35,6 +36,7 @@ class MusashinoAssistant_RAG:
             n_results=4,
             include=["documents", "metadatas"]
         )
+        print('query: ',user_query)
 
         # 2. AUGMENTATION
         reference_text = ""
@@ -43,7 +45,7 @@ class MusashinoAssistant_RAG:
         for i in range(len(results['documents'][0])):
             doc_text = results['documents'][0][i]
             meta = results['metadatas'][0][i]
-            
+            print(f"DEBUG: Metadata keys found: {meta.keys()}")
             # Get URL and add to our source list if it's not a duplicate
             url = meta.get('url', 'N/A')
             if url != 'N/A' and url not in source_urls:
@@ -60,9 +62,20 @@ class MusashinoAssistant_RAG:
 
         # 3. GENERATION
         system_prompt = f"""
-        あなたは武蔵野大学の事務助手です。
-        以下の参考資料のみを使用して、{language}で回答してください。
-        回答内にはURLを直接書かないでください（システムが別途表示します）。
+        ### 役割 (Role)
+        あなたは武蔵野大学（Musashino University）の親切で正確な事務助手です。
+        学生、保護者、または入学希望者からの質問に対し、提供された資料に基づいてサポートを提供することが任務です。
+
+        ### 制限事項 (Constraints)
+        1. **資料の厳守**: 回答は、以下の「参考資料」にある情報のみに基づき作成してください。資料にない情報は「申し訳ありませんが、その件に関する正確な情報が見当たりませんでした」と丁寧に伝えてください。
+        2. **推測の禁止**: 自分の知識や外部の情報を使って回答を捏造しないでください。
+        3. **言語指定**: 回答は必ず {language} で行ってください。
+        4. **トーン**: 丁寧で公式な大学窓口のような口調（敬語）を保ってください。
+
+        ### 回答の構成 (Structure)
+        - 質問に対する直接的な回答を最初に述べます。
+        - 詳細な説明が必要な場合は、箇条書きを活用して読みやすくしてください。
+        - 関連する窓口や部署名が資料にある場合は、それを案内してください。
         """
 
         user_prompt = f"[Reference Materials]:\n{reference_text}\n\nUser Question: {user_query}"

@@ -125,7 +125,7 @@ dependencies:
       - httptools==0.7.1
       - httpx==0.28.1
       - httpx-sse==0.4.3
-      - huggingface-hub==1.6.0
+      - huggingface-hub==1.0.0
       - humanfriendly==10.0
       - idna==3.11
       - importlib-metadata==8.7.1
@@ -257,9 +257,9 @@ dependencies:
       - tokenizers==0.22.2
       - toml==0.10.2
       - tomli==2.4.0
-      - torch==2.5.1+cu121
-      - torchaudio==2.5.1+cu121
-      - torchvision==0.20.1+cu121
+      - torch==2.5.1
+      - torchaudio==2.5.1
+      - torchvision==0.20.1
       - tqdm==4.67.3
       - traits==7.1.0
       - transformers==5.2.0

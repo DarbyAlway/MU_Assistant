@@ -10,14 +10,14 @@ from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-chroma_client = chromadb.PersistentClient(path="./chroma_rag_db_storage")
+chroma_client = chromadb.PersistentClient(path="./rag_db")
 embedding_function = OpenAIEmbeddingFunction(
     api_key=OPENAI_API_KEY,
     model_name="text-embedding-3-large"
 )
 
 collection = chroma_client.get_or_create_collection(
-    name="japanese_docs_with_overlap", 
+    name="RAG", 
     embedding_function=embedding_function,
     metadata={"hnsw:space": "cosine"}
 
@@ -43,7 +43,7 @@ def chunk_text_with_overlap(text, max_tokens=800, overlap=100):
     return chunks
 
 # 2. Processing Data
-file_path = '../data_jp/jp_data.jsonl'
+file_path = 'merged.jsonl'
 with open(file_path, 'r', encoding='utf-8') as f:
     total_lines = sum(1 for _ in f)
 

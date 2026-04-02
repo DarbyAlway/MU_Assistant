@@ -79,7 +79,7 @@ async def search(request: SearchRequest):
             "duration": duration,
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
         }
-
+        print(response_data["sources_RAG"])
         # Save to in-memory history
         chat_history.append(response_data)
         

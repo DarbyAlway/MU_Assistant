@@ -10,7 +10,7 @@ from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-client_db = chromadb.PersistentClient(path="./chroma_sar_storage")
+client_db = chromadb.PersistentClient(path="./sar_db")
 
 embedding_fn = OpenAIEmbeddingFunction(
     api_key=OPENAI_API_KEY,
@@ -18,7 +18,7 @@ embedding_fn = OpenAIEmbeddingFunction(
 )
 
 collection = client_db.get_or_create_collection(
-    name="jp_sar_collection",
+    name="SAR",
     embedding_function=embedding_fn,
     metadata={"hnsw:space": "cosine"}
 )
@@ -40,7 +40,7 @@ def chunk_with_overlap(text, size=800, overlap=150):
     return chunks
 
 # 2. Ingestion Loop
-file_path = '../data_jp/jp_data_with_questions.jsonl'
+file_path = 'merged.jsonl'
 with open(file_path, 'r', encoding='utf-8') as f:
     lines = f.readlines()
 

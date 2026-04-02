@@ -19,11 +19,9 @@ OPENAI_API_KEY=your_openai_api_key_here
 Download the required vector databases from the following links:
 
 * **SAR Vector Database**
-  https://drive.google.com/drive/folders/1P5eJOmRAqVWhblJVSraic-619Up5Y4fk?usp=sharing
-
+  https://drive.google.com/drive/folders/1mq15KU2ieUmLJK63DdhDb9IzSTH_8e80?usp=sharing
 * **RAG Vector Database**
-  https://drive.google.com/drive/folders/1mqLVuHy6xS6D4llxPOckwCGL--jnFJC5?usp=sharing
-
+  https://drive.google.com/drive/folders/1WVeW0gmiWsyrdvdMSJB6B-AX49WmahXe?usp=sharing
 ---
 
 ### 3. Place the Databases in the Project

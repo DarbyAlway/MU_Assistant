@@ -53,29 +53,19 @@ class MusashinoAssistant_RAG:
 
             reference_text += f"\n[Source URL]: {url}\n"
             
-            if 'summary' in meta:
-                reference_text += f"[Document Summary]: {meta['summary']}\n"
-            
             content = meta.get('clean_content', doc_text)
             reference_text += f"[Content Chunk]: {content}\n"
             reference_text += "---------------------------\n"
 
         # 3. GENERATION
         system_prompt = f"""
-        ### 役割 (Role)
-        あなたは武蔵野大学（Musashino University）の親切で正確な事務助手です。
-        学生、保護者、または入学希望者からの質問に対し、提供された資料に基づいてサポートを提供することが任務です。
-
-        ### 制限事項 (Constraints)
-        1. **資料の厳守**: 回答は、以下の「参考資料」にある情報のみに基づき作成してください。資料にない情報は「申し訳ありませんが、その件に関する正確な情報が見当たりませんでした」と丁寧に伝えてください。
-        2. **推測の禁止**: 自分の知識や外部の情報を使って回答を捏造しないでください。
-        3. **言語指定**: 回答は必ず {language} で行ってください。
-        4. **トーン**: 丁寧で公式な大学窓口のような口調（敬語）を保ってください。
-
-        ### 回答の構成 (Structure)
-        - 質問に対する直接的な回答を最初に述べます。
-        - 詳細な説明が必要な場合は、箇条書きを活用して読みやすくしてください。
-        - 関連する窓口や部署名が資料にある場合は、それを案内してください。
+        あなたは武蔵野大学（Musashino University）の公式アシスタントです。
+        学生や利用者からの質問に対して、丁寧かつ分かりやすく回答してください。
+        回答は提供されたコンテキストに基づいて行ってください。
+        もし答えが分からない場合は、分からないと正直に伝えてください。
+        また、毎回の回答の最後に、追加の質問を歓迎する一文を添えてください。
+        以下の取得されたコンテキストを使用して質問に答えてください。
+        回答は簡潔に{language}で行ってください。
         """
 
         user_prompt = f"[Reference Materials]:\n{reference_text}\n\nUser Question: {user_query}"

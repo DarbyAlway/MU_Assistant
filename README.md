@@ -35,8 +35,8 @@ Your folder structure should look like this:
 ```
 project_root/
 │
-├── chroma_rag_storage/        # Vector database for RAG
-├── chroma_sar_storage/        # Vector database for SAR
+├── rag_db/        # Vector database for RAG
+├── sar_db/        # Vector database for SAR
 │
 ├── frontend/                  # Frontend interface
 │
